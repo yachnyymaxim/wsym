@@ -19,7 +19,7 @@ generic solution.
 ### how to use
 
 ```
-usage: wsym.py [-h] [-v] [-f SYMBOLS] [-i SYMBOLS] [-n SYMBOLS] input output
+usage: wsym.py [-h] [-v] [-f SYMBOLS] [-i SYMBOLS] [-n SYMBOLS] [-s SYMBOLS] input output
 ```
 
 There are multiple ways to provide symbols that should be added
@@ -41,6 +41,10 @@ to the binary.
 > This is the output of nm, the flags outputted by nm
 > to describe each symbol are ignored.
 
+```-s, --sym```
+> GCC linker format for symbles, one symbol per line:
+>
+> name = hex_addr;
 
 wsym will generate a new ELF file which can be directly run
 under gdb, or you can use the add-symbol-file command in
@@ -76,4 +80,3 @@ touch the original file as little as possible.
   - Allow for symbol types (data would be nice)
   - Link a symbol to the smallest section containing said symbol
     (instead of taking the first one that matches the address)
-

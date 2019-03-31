@@ -268,6 +268,27 @@ class NMParser(FileParser):
 
         return symbols
 
+class SYMParser(FileParser):
+
+    def get_symbols(self, target, verbose=False):
+
+        symbols = []
+
+        for line in self.file:
+            splited = line.split()
+            if len(splited) != 3:
+                continue
+
+            name, addr = splited[0], int(splited[2][:len(splited[2])-1], 16)
+
+            if verbose:
+                self.log("%15s = %#x,\tsize=%d" % (
+                        name, addr, 0))
+
+            symbols.append((name, addr, 0))
+
+        return symbols
+
 class IDAParser(FileParser):
 
     def get_symbols(self, target, verbose=False):
@@ -359,6 +380,8 @@ if __name__ == '__main__':
                         type=IDAParser, dest="symbols", action="append")
     parser.add_argument("-n", "--nm", help="nm format.",
                         type=NMParser, dest="symbols", action="append")
+    parser.add_argument("-s", "--sym", help="sym format.",
+                        type=SYMParser, dest="symbols", action="append")
 
     args = parser.parse_args()
 
